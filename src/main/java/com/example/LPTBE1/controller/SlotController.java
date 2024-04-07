@@ -18,6 +18,7 @@ public class SlotController {
     @Autowired
     SlotService slotService;
 
+    //adding slots using consultant id, date and time
     @PostMapping("/add-slot/{consultantId}/{date}/{time}")
     public ResponseEntity addSlot(@PathVariable int consultantId, @PathVariable LocalDate date, @PathVariable LocalTime time) {
         try {
@@ -30,8 +31,9 @@ public class SlotController {
 
     }
 
+    //booking slots using client id and slot id
     @PutMapping("/book-slot/{clientId}/{slotId}")
-    public ResponseEntity boolSlot(@PathVariable int clientId, @PathVariable String slotId) {
+    public ResponseEntity bookSlot(@PathVariable int clientId, @PathVariable String slotId) {
         try{
             String message = slotService.bookSlot(clientId, slotId);
             return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
@@ -41,6 +43,7 @@ public class SlotController {
         }
     }
 
+    //getting list of available slots using consultant id
     @GetMapping("/get-slots")
     public ResponseEntity getSlots(@RequestParam("id") int consultantId) {
         try{

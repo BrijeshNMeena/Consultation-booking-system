@@ -14,6 +14,7 @@ public class ClientController {
     @Autowired
     ClientService clientService;
 
+    //searching client by email id
     @GetMapping("/get-client")
     public ResponseEntity getClient(@RequestParam("emailId") String emailId) {
         try{

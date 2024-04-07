@@ -20,6 +20,7 @@ public class ConsultantController {
     @Autowired
     ConsultantService consultantService;
 
+    //searching consultant based on Expertise and experience
     @GetMapping("/get-consultant")
     public ResponseEntity getConsultant(@RequestParam("area_of_expertise") Expertise expertise, @RequestParam("Min_experience") int experience) {
         try {
@@ -31,6 +32,7 @@ public class ConsultantController {
         }
     }
 
+    //to get list of all consultants
     @GetMapping("/get-all-consultant")
     public ResponseEntity getConsultant() {
         try {
@@ -42,6 +44,7 @@ public class ConsultantController {
         }
     }
 
+    //searching consultant by email id
     @GetMapping("/get-consultant-by-emailId")
     public ResponseEntity getConsultantByEmailId(@RequestParam("emailId") String emailId) {
         try {

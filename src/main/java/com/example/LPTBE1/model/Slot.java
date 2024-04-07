@@ -22,6 +22,7 @@ public class Slot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    //to be generated randomly and used to book slots
     String slotId;
 
     @ManyToOne
@@ -36,5 +37,6 @@ public class Slot {
 
     LocalTime time;
 
+    //marked as false when created and turned to true when booked
     boolean booked;
 }

@@ -25,7 +25,10 @@ public class UserRequestDto {
 
     Gender gender;
 
+    //set as enum as there can be only limited known values to select from
     Role role;
+
+    //last three will get ignored in case of client
 
     int fees;
 

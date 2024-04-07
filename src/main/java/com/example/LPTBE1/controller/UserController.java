@@ -23,9 +23,12 @@ public class UserController {
     @Autowired
     ConsultantService consultantService;
 
+
+    //registering users
     @PostMapping("/register-user")
     public ResponseEntity registerUser(@RequestBody UserRequestDto user) {
 
+        //filtering if the user is a client or a consultant
         if(user.getRole().toString().equals("CLIENT")) {
             try{
                 UserResponseDto userResponseDto = clientService.registerClient(user);

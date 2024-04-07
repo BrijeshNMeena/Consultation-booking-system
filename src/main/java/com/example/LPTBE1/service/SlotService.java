@@ -33,19 +33,25 @@ public class SlotService {
 
     public String addSlot(int consultantId, LocalDate date, LocalTime time) {
         Optional<Consultant> optionalConsultant = consultantRepository.findById(consultantId);
+
+        //checking if consultant exist
         if(optionalConsultant.isEmpty()) {
             throw new UserNotFound("Invalid consultant Id");
         }
 
         Consultant consultant = optionalConsultant.get();
 
+        //creating slot object
         Slot slot = new Slot();
         slot.setSlotId(String.valueOf(UUID.randomUUID()));
         slot.setConsultant(consultant);
         slot.setDate(date);
         slot.setTime(time);
+
+        //initially marking booked as false
         slot.setBooked(false);
 
+        //saving into repository
         slotRepository.save(slot);
 
         return "Slot added successfully";
@@ -55,21 +61,35 @@ public class SlotService {
 
         Slot slot = slotRepository.findBySlotId(slotId);
 
+        //checking if slot exist
         if(slot == null) {
             throw new SlotNotFound("Provide a valid session Id");
         }
 
         Optional<Client> optionalClient = clientRepository.findById(clientId);
+
+        //checking if client exist
         if(optionalClient.isEmpty()) {
             throw new UserNotFound("Provide a valid client Id");
         }
 
+        //checking if slot is already booked
+        if(slot.isBooked()) {
+            throw new RuntimeException("This slot is already booked please select another slot");
+        }
+
         Client client = optionalClient.get();
 
+        //updating client into slot
         slot.setClient(client);
+
+        //marking slot as booked
         slot.setBooked(true);
 
+        //updating client record
         client.setSlot(slot);
+
+        //saving client and hence slot record through cascade
         clientRepository.save(client);
 
         return "Congratulation! Session booked successfully";
@@ -79,17 +99,23 @@ public class SlotService {
 
         Optional<Consultant> optionalConsultant = consultantRepository.findById(consultantId);
 
+        //checking if consultant exist
         if (optionalConsultant.isEmpty()){
             throw new UserNotFound("Provide valid consultant Id");
         }
 
         Consultant consultant = optionalConsultant.get();
+
+        //fetching slot list from consultant's record
         List<Slot> slotList = consultant.getSlotList();
 
         List<SlotResponseDto> slotResponseDtoList = new ArrayList<>();
 
         for(Slot slot : slotList) {
+
+            //checking if slot is available
             if(!slot.isBooked()) {
+                ////creating dto from slots
                 SlotResponseDto slotResponseDto = new SlotResponseDto();
                 slotResponseDto.setSlotId(slot.getSlotId());
                 slotResponseDto.setDate(slot.getDate());

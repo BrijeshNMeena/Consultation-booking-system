@@ -39,6 +39,7 @@ public class Consultant {
 
     int fees;
 
+    //set as enum as expertise are be fixed
     @Enumerated(EnumType.STRING)
     Expertise areaOfExpertise;
 
