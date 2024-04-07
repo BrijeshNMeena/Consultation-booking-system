@@ -4,6 +4,7 @@ import com.example.LPTBE1.Enum.Expertise;
 import com.example.LPTBE1.dto.requestDto.UserRequestDto;
 import com.example.LPTBE1.dto.responseDto.ConsultantResponseDto;
 import com.example.LPTBE1.dto.responseDto.UserResponseDto;
+import com.example.LPTBE1.exception.UserNotFound;
 import com.example.LPTBE1.model.Consultant;
 import com.example.LPTBE1.repository.ConsultantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +76,7 @@ public class ConsultantService {
             consultantResponseDto.setName(consultant.getName());
             consultantResponseDto.setAge(consultant.getAge());
             consultantResponseDto.setGender(consultant.getGender());
+            consultantResponseDto.setFees(consultant.getFees());
 
             list.add(consultantResponseDto);
 
@@ -83,4 +85,21 @@ public class ConsultantService {
         return list;
     }
 
+    public ConsultantResponseDto getConsultantByEmailId(String emailId) {
+
+        Consultant consultant = consultantRepository.findByEmail(emailId);
+
+        if(consultant == null) {
+            throw new UserNotFound("Provide valid consultant email id");
+        }
+
+        ConsultantResponseDto consultantResponseDto = new ConsultantResponseDto();
+
+        consultantResponseDto.setName(consultant.getName());
+        consultantResponseDto.setAge(consultant.getAge());
+        consultantResponseDto.setGender(consultant.getGender());
+        consultantResponseDto.setFees(consultant.getFees());
+
+        return consultantResponseDto;
+    }
 }

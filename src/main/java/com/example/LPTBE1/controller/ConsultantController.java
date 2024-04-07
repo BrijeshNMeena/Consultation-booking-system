@@ -1,9 +1,7 @@
 package com.example.LPTBE1.controller;
 
 import com.example.LPTBE1.Enum.Expertise;
-import com.example.LPTBE1.dto.responseDto.ClientResponseDto;
 import com.example.LPTBE1.dto.responseDto.ConsultantResponseDto;
-import com.example.LPTBE1.dto.responseDto.SlotResponseDto;
 import com.example.LPTBE1.service.ConsultantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +36,17 @@ public class ConsultantController {
         try {
             List<ConsultantResponseDto> list = consultantService.getAllConsultant();
             return new ResponseEntity(list, HttpStatus.FOUND);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-consultant-by-emailId")
+    public ResponseEntity getConsultantByEmailId(@RequestParam("emailId") String emailId) {
+        try {
+            ConsultantResponseDto consultantResponseDto = consultantService.getConsultantByEmailId(emailId);
+            return new ResponseEntity(consultantResponseDto, HttpStatus.FOUND);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

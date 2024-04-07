@@ -1,7 +1,6 @@
 package com.example.LPTBE1.controller;
 
 import com.example.LPTBE1.dto.responseDto.ClientResponseDto;
-import com.example.LPTBE1.exception.UserNotFound;
 import com.example.LPTBE1.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,9 +15,9 @@ public class ClientController {
     ClientService clientService;
 
     @GetMapping("/get-client")
-    public ResponseEntity getClient(@RequestParam("id") int clientId) {
+    public ResponseEntity getClient(@RequestParam("emailId") String emailId) {
         try{
-            ClientResponseDto clientResponseDto = clientService.getClient(clientId);
+            ClientResponseDto clientResponseDto = clientService.getClient(emailId);
             return new ResponseEntity(clientResponseDto, HttpStatus.FOUND);
         }
         catch (Exception e) {

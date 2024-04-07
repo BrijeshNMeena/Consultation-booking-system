@@ -18,13 +18,11 @@ public class ClientService {
     @Autowired
     ClientRepository clientRepository;
 
-    public ClientResponseDto getClient(int clientId) {
-        Optional<Client> optionalClient = clientRepository.findById(clientId);
+    public ClientResponseDto getClient(String emailId) {
+        Client client = clientRepository.findByEmail(emailId);
 
-        if (optionalClient.isEmpty())
-            throw new UserNotFound("Invalid Client ID!");
-
-        Client client = optionalClient.get();
+        if (client == null)
+            throw new UserNotFound("Invalid Client Email Id!");
 
         ClientResponseDto clientResponseDto = new ClientResponseDto();
         clientResponseDto.setId(client.getId());

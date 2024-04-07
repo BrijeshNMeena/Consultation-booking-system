@@ -53,9 +53,9 @@ public class SlotService {
 
     public String bookSlot(int clientId, String slotId) {
 
-        Optional<Slot> optionalSlot = Optional.ofNullable(slotRepository.findBySlotId(slotId));
+        Slot slot = slotRepository.findBySlotId(slotId);
 
-        if(optionalSlot.isEmpty()) {
+        if(slot == null) {
             throw new SlotNotFound("Provide a valid session Id");
         }
 
@@ -66,7 +66,6 @@ public class SlotService {
 
         Client client = optionalClient.get();
 
-        Slot slot = optionalSlot.get();
         slot.setClient(client);
         slot.setBooked(true);
 

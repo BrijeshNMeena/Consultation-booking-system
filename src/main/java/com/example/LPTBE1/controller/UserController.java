@@ -2,12 +2,10 @@ package com.example.LPTBE1.controller;
 
 import com.example.LPTBE1.dto.requestDto.UserRequestDto;
 import com.example.LPTBE1.dto.responseDto.UserResponseDto;
-import com.example.LPTBE1.model.Client;
 import com.example.LPTBE1.service.ClientService;
 import com.example.LPTBE1.service.ConsultantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
